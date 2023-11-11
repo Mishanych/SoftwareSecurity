@@ -1,0 +1,29 @@
+### Task 1 Auth
+POST https://{{domain}}/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+audience={{audience}}&grant_type=client_credentials&client_id={{client_id}}&client_secret={{client_secret}}
+
+> {%
+ if (response.status !== 200) {
+     client.global.clear("jwt");
+ } else {
+     let jwt = response.body['access_token'];
+     client.global.set("jwt", jwt);
+ }
+ %}
+
+### Task 2 Create user
+POST https://{{domain}}/api/v2/users
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "email": "m.strilchuk.it04@kpi.ua",
+  "blocked": false,
+  "user_id": "{{$random.alphanumeric(5)}}",
+  "connection": "Username-Password-Authentication",
+  "password": "Qwerty123@",
+  "verify_email": false
+}
