@@ -8,8 +8,8 @@ audience={{audience}}&grant_type=client_credentials&client_id={{client_id}}&clie
  if (response.status !== 200) {
      client.global.clear("jwt");
  } else {
-     let jwt = response.body['access_token'];
-     client.global.set("jwt", jwt);
+     let jwt_token = response.body['access_token'];
+     client.global.set("jwt", jwt_token);
  }
  %}
 
@@ -17,13 +17,13 @@ audience={{audience}}&grant_type=client_credentials&client_id={{client_id}}&clie
 POST https://{{domain}}/api/v2/users
 Accept: application/json
 Content-Type: application/json
-Authorization: Bearer {{jwt}}
+Authorization: Bearer {{jwt_token}}
 
 {
   "email": "m.strilchuk.it04@kpi.ua",
   "blocked": false,
   "user_id": "{{$random.alphanumeric(5)}}",
   "connection": "Username-Password-Authentication",
-  "password": "Qwerty123@",
+  "password": "Qwertyiop-123",
   "verify_email": false
 }
