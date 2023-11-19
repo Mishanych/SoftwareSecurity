@@ -1,4 +1,4 @@
-### Task 1 Auth
+### Task 1
 POST https://{{domain}}/oauth/token
 Content-Type: application/x-www-form-urlencoded
 
@@ -13,7 +13,7 @@ audience={{audience}}&grant_type=client_credentials&client_id={{client_id}}&clie
  }
  %}
 
-### Task 2 Create user
+### Task 2
 POST https://{{domain}}/api/v2/users
 Accept: application/json
 Content-Type: application/json

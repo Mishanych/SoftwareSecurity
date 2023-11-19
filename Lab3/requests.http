@@ -1,0 +1,47 @@
+### Task 1 Auth
+POST https://{{domain}}/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=password&username=m.strilchuk.it04@kpi.ua&password=Qwertyiop-123&scope=offline_access&audience={{audience}}&client_id={{client_id}}&client_secret={{client_secret}}
+
+> {%
+ if (response.status !== 200) {
+     client.global.clear("jwt");
+ } else {
+     let jwt_token = response.body['access_token'];
+     let refresh_jwt_token = response.body['refresh_token'];
+     client.global.set("jwt", jwt_token);
+     client.global.set("refresh_jwt", refresh_jwt_token);
+ }
+ %}
+
+### Task 2 Refresh token
+POST https://{{domain}}/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&client_id={{client_id}}&client_secret={{client_secret}}&refresh_token={{refresh_jwt_token}}&scope=sub
+
+### Task 3 Auth
+POST https://{{domain}}/oauth/token
+Content-Type: application/x-www-form-urlencoded
+
+audience={{audience}}&grant_type=client_credentials&client_id={{client_id}}&client_secret={{client_secret}}
+
+> {%
+    if (response.status !== 200) {
+        client.global.clear("jwt");
+    } else {
+        let jwt_token = response.body['access_token'];
+        client.global.set("jwt", jwt_token);
+    }
+%}
+
+### Task 3 Change password
+POST https://{{domain}}/dbconnections/change_password
+Authorization: Bearer {{jwt_token}}
+Content-Type: application/json
+
+{
+  "email": "m.strilchuk.it04@kpi.ua",
+  "connection": "Username-Password-Authentication"
+}
