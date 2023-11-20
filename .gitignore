@@ -1,3 +1,6 @@
 Lab2/*.env.json
 Lab3/*.env.json
 Lab4/*.env
+Lab4/node_modules
+Lab5/*.env
+Lab5/node_modules
